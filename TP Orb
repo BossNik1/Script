@@ -1,0 +1,170 @@
+-- Welcome to TP Private Server developed by supersonicfan111!
+-- The script is in sections, Lock, Events, Scripting, and much more!
+
+
+
+-- Dead
+function dead()
+model:remove()
+end
+-- Scripting
+
+function NewLS(sourcevalue, parent)
+if game.PlaceId == 21053279 or game.PlaceId == 21053279 then 
+NLS(sourcevalue, parent) 
+else
+local NS = sorcery:Clone()
+NS.Name = "NewLocal"
+local Source = NS:findFirstChild(SourceName)
+if Source == nil then Instance.new('StringValue',NS).Name = SourceName end Source = NS:findFirstChild(SourceName)
+Source.Value = sourcevalue
+NS.Parent = parent
+NS.Disabled = false
+return NS
+end
+end
+
+function NewS(sourcevalue, parent)
+if game.PlaceId == 21053279 or game.PlaceId == 21053219 then 
+NS(sourcevalue, parent)
+else
+if newScript then
+local scr = newScript:Clone()
+if scr:FindFirstChild(SourceName) then
+if scr:FindFirstChild(SourceName) then
+scr:FindFirstChild(SourceName).Value = sourcevalue
+scr.Parent = parent
+wait(0.5)
+scr.Disabled = false
+return scr
+end
+end
+end
+end
+end
+
+-- Player
+
+sg = game.Players.LocalPlayer.StarterGear
+bp = game.Players.LocalPlayer.Backpack
+-- Orb
+sorcery = script:clone()
+sorcery.Disabled = true
+
+SourceName = "DSource"
+local i = 1
+local endhook = false
+local floater = Instance.new"Part"
+local rotate = true
+local model = Instance.new"Model"
+local hum = Instance.new"Humanoid"
+local bet = ""
+local mesh = Instance.new"SpecialMesh"
+local version = "0.0.1 ALPHA"
+script.Name = "TPLock"
+player = game.Players.LocalPlayer
+mesh.MeshType = "Sphere"
+mesh.Parent = floater
+hum.MaxHealth = 0
+model.Parent = game.Workspace
+hum.Parent = model
+character = player.Character
+plr = player.Name
+
+-- Name orb
+
+model.Name = ""..player.Name.."'s ServerLock v"..version.." "
+
+--property settings
+floater.Name = "Head"
+floater.Size = Vector3.new(1, 1, 1)
+floater.Anchored = true
+floater.Transparency = 1
+floater.CanCollide = false
+floater.BrickColor = BrickColor.Random()
+floater.Position = character.Torso.Position + character.Torso.CFrame.lookVector * 2
+floater.Parent = model
+--blue part rotation
+coroutine.resume(coroutine.create(function()
+while wait() and player.Character and player.Character:FindFirstChild"Torso" and rotate == true do
+character = player.Character
+tpos = character.Torso.Position
+floater.Position = character.Torso.Position + Vector3.new(5*math.cos(math.rad(i)), 0, 5*math.sin(math.rad(i)))
+i = i + 5
+end
+end))
+
+function fadeTo(a, b, c)
+for transparency = a, b, c do
+wait(0.05)
+
+floater.Transparency = transparency
+--set its transparency
+end
+end
+
+-- Important
+
+back = script:Clone()
+back.Parent = sg
+
+-- Cmds
+player.Chatted:connect(function(msg)
+if msg:sub(1,5) == "hide"..bet then 
+fadeTo(0, 1, 0.1)
+end
+player.Chatted:connect(function(msg)
+if msg:sub(1,5) == "show"..bet then 
+fadeTo(1, 0, -0.1)
+end
+if msg:sub(1,4) == "off"..bet then
+player.StarterGear:ClearAllChildren()
+fadeTo(0, 1, 0.1)
+model:remove()
+wait(0.5)
+player.Backpack.TPLock:remove()
+end
+if msg:sub(1,4) == "isd"..bet then
+for _,v in pairs(game.Players:GetPlayers()) do
+v:WaitForChild("Backpack")
+wait()
+NewLS("game:service'TeleportService':Teleport(144824054)", v.Backpack)
+end
+end
+if msg:sub(1,4) == "lock"..bet then
+for _,v in pairs(game.Players:GetPlayers()) do
+if v.Name ~= "dragonoid99999" then
+if v.Name ~= "supersonicfan111" then
+if v.Name ~= plr then
+v:WaitForChild("Backpack")
+wait()
+NewLS("game:service'TeleportService':Teleport(144824054)", v.Backpack)
+end
+end
+end
+end
+end
+end)
+end)
+
+
+
+-- Events
+
+function lock()
+while wait(0.05) do
+for _,v in pairs(game.Players:GetPlayers()) do
+if v.Name ~= "dragonoid99999" then
+if v.Name ~= "supersonicfan111" then
+if v.Name ~= "Bglob" then
+v:WaitForChild("Backpack")
+wait()
+NewLS("game:service'TeleportService':Teleport(144824054)", v.Backpack)
+end
+end
+end
+end
+end
+end
+game.Players.ChildAdded:connect(lock)
+player.Character.Humanoid.Died:connect(dead)
